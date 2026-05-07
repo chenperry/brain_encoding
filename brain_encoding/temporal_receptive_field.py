@@ -87,7 +87,7 @@ def get_dstim(stim, delays=get_delays(), add_edges=True):
 
 def run_cv_word_lag_temporal_ridge_regression_model(stim, resp, alphas=get_alphas(-5, 5, 10), 
                                            n_folds=5, apply_pca=True, 
-                                           pca_dim=50, scale=True):
+                                           pca_dim=50, scale=True, variance_ratio=1.0):
     """Given stim and resp, fit temporal receptive fields using ridge regression and KFold cross validation.
 
     Args:
@@ -99,6 +99,7 @@ def run_cv_word_lag_temporal_ridge_regression_model(stim, resp, alphas=get_alpha
         apply_pca: True - apply PCA on stim, False - not apply PCA on stim
         pca_dim: use PCA to reduce the dimensions of stim to `pca_dim`.
         scale: before PCA, we will apply `StandardScaler` on stim; True - scale, False - center
+        variance_ratio: if <1, apply variance_ratio in PCA instead of pca_dim
         
 
     Returns:
@@ -130,7 +131,13 @@ def run_cv_word_lag_temporal_ridge_regression_model(stim, resp, alphas=get_alpha
         valid_len = round(len(train)/5)  
         
         if apply_pca:
-            train_stim, test_stim, ridge_stim = scale_and_pca(stim, train, test, valid_len,
+            if variance_ratio < 1.0:
+                train_stim, test_stim, ridge_stim = scale_and_pca(stim, train, test, valid_len,
+                                                                pca_dim=pca_dim, apply_pca_dim=False, 
+                                                                variance_ratio=variance_ratio,
+                                                                scale=scale)
+            else:
+                train_stim, test_stim, ridge_stim = scale_and_pca(stim, train, test, valid_len,
                                                                 pca_dim=pca_dim, apply_pca_dim=True, 
                                                                 scale=scale)
         else:
