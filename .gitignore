@@ -3,7 +3,7 @@ data/*
 
 # Do not ignore the timit_example directory (but do not track changes within it)
 !data/timit_example/
-data/timit_example/*
+!data/timit_example/*
 
 # Ignore specific files in the data folder
 data/example_*.pkl
