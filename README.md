@@ -1,4 +1,4 @@
-# **Spatiotemporal Dynamics of Neural Representations**
+# **Spatiotemporal Dynamics of Neural Representations and Self-Supervised Models**
 
 This repository contains code and data associated with the paper:  
 "**Spatiotemporal dynamics of structural and content representations align self-supervised models with the cortical speech network**"  
